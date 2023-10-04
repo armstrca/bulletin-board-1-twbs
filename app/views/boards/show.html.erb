@@ -1,15 +1,65 @@
-<div>
-  <div>
-    <h1>
-      <%= @the_board.name %>
-    </h1>
+<div class="container">
+  <div class="row mb-3">
+
+    <nav class="navbar bg-body-white">
+
+      <div class="container-fluid">
+        <a class="navbar-brand bg">
+          <h1>
+            <%= @the_board.name %>
+          </h1>
+        </a>
+        <button class="btn btn-outline-success" type="submit">Add new post</button>
+      </div>
+    </nav>
+
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Active posts (<%= @active_posts.count %>)</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Expired posts (<%= @expired_posts.count %>)</button>
+
+      </ul>
+    </div>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="active-tab-pane" role="tabpanel" aria-labelledby="active-tab" tabindex="0">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+          <% @active_posts.each do |a_post| %>
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  <h1 class="h6 my-1">
+                    <%= a_post.title %>
+                  </h1>
+                  <p class="card-text">
+                    Expires on <%= a_post.created_at.strftime("%b %e, %Y") %>
+                  </p>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <%= a_post.body %>
+                  </p>
+                </div>
+                <div>
+                  <p class="card-footer">
+                    Posted on<%= a_post.expires_on.strftime("%b %e, %Y") %>
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<hr>
-
-<h2>
-  Add a new post
+<!--
+        <h2>
+Add a new post
 </h2>
 
 <form action="/insert_post" method="post">
